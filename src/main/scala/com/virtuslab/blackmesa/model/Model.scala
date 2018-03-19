@@ -2,10 +2,10 @@ package com.virtuslab.blackmesa.model
 
 import scala.util.Random
 
-case class Model(seed: Long = System.currentTimeMillis()) {
+abstract class Model(seed: Long = System.currentTimeMillis()) {
   val random: Random = new Random(seed)
-  var running = true
-  var schedule = None
+  def running = true
+  def schedule: BaseScheduler // LBIALY todo maybe generic subtype?
 
   def runModel(): Unit = {
     while (running) {
@@ -14,5 +14,7 @@ case class Model(seed: Long = System.currentTimeMillis()) {
   }
 
   def step(): Unit = {}
+
+  def grid: Grid[_]
 
 }

@@ -37,7 +37,7 @@ import scala.reflect.ClassTag
  * is_cell_empty: Returns a bool of the contents of a cell.
  *
  */
-abstract class Grid[AgentValue >: Null: ClassTag](width: Int, height: Int, isTorus: Boolean)(implicit ev: AgentValue <:< Agent) {
+abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, isTorus: Boolean) {
 
   var grid: Array[Array[AgentValue]] = Array.fill(width) {
     Array.fill(height)(defaultValue())
@@ -76,6 +76,57 @@ abstract class Grid[AgentValue >: Null: ClassTag](width: Int, height: Int, isTor
    */
   def neighborsIter(pos: (Int, Int), moore: Boolean = true): Iterator[AgentValue] = {
     val neighborhood: Iterator[(Int, Int)] = iterNeighborhood(pos, moore = moore)
+    iterCellListContents(neighborhood)
+  }
+
+  /**
+   * Return a list of cells that are in the neighborhood of a
+   * certain point.
+   * *
+   * Args:
+   * pos: Coordinate tuple for the neighborhood to get.
+   * moore: If True, return Moore neighborhood
+   * (including diagonals)
+   * If False, return Von Neumann neighborhood
+   * (exclude diagonals)
+   * include_center: If True, return the (x, y) cell as well.
+   * Otherwise, return surrounding cells only.
+   * radius: radius, in cells, of neighborhood to get.
+   * *
+   * Returns:
+   * A list of coordinate tuples representing the neighborhood;
+   * With radius 1, at most 9 if Moore, 5 if Von Neumann (8 and 4
+   * if not including the center).
+   */
+  def getNeighborhood(pos: (Int, Int), moore: Boolean, includeCenter: Boolean = false, radius: Int = 1): List[(Int, Int)] = {
+    iterNeighborhood(pos, moore, includeCenter, radius).toList
+  }
+
+  def getNeighbors(pos: (Int, Int), moore: Boolean, includeCenter: Boolean = false, radius: Int = 1): List[AgentValue] = {
+    iterNeighbors(pos, moore, includeCenter, radius).toList
+  }
+
+  /**
+   * Return an iterator over neighbors to a certain point.
+   * *
+   * Args:
+   * pos: Coordinates for the neighborhood to get.
+   * moore: If True, return Moore neighborhood
+   * (including diagonals)
+   * If False, return Von Neumann neighborhood
+   * (exclude diagonals)
+   * include_center: If True, return the (x, y) cell as well.
+   * Otherwise,
+   * return surrounding cells only.
+   * radius: radius, in cells, of neighborhood to get.
+   * *
+   * Returns:
+   * An iterator of non-None objects in the given neighborhood;
+   * at most 9 if Moore, 5 if Von-Neumann
+   * (8 and 4 if not including the center).
+   */
+  def iterNeighbors(pos: (Int, Int), moore: Boolean, includeCenters: Boolean = false, radius: Int = 1): Iterator[AgentValue] = {
+    val neighborhood = iterNeighborhood(pos, moore, includeCenters, radius)
     iterCellListContents(neighborhood)
   }
 
@@ -133,57 +184,6 @@ abstract class Grid[AgentValue >: Null: ClassTag](width: Int, height: Int, isTor
   }
 
   /**
-   * Return a list of cells that are in the neighborhood of a
-   * certain point.
-   * *
-   * Args:
-   * pos: Coordinate tuple for the neighborhood to get.
-   * moore: If True, return Moore neighborhood
-   * (including diagonals)
-   * If False, return Von Neumann neighborhood
-   * (exclude diagonals)
-   * include_center: If True, return the (x, y) cell as well.
-   * Otherwise, return surrounding cells only.
-   * radius: radius, in cells, of neighborhood to get.
-   * *
-   * Returns:
-   * A list of coordinate tuples representing the neighborhood;
-   * With radius 1, at most 9 if Moore, 5 if Von Neumann (8 and 4
-   * if not including the center).
-   */
-  def getNeighborhood(pos: (Int, Int), moore: Boolean, includeCenter: Boolean = false, radius: Int = 1): List[(Int, Int)] = {
-    iterNeighborhood(pos, moore, includeCenter, radius).toList
-  }
-
-  /**
-   * Return an iterator over neighbors to a certain point.
-   * *
-   * Args:
-   * pos: Coordinates for the neighborhood to get.
-   * moore: If True, return Moore neighborhood
-   * (including diagonals)
-   * If False, return Von Neumann neighborhood
-   * (exclude diagonals)
-   * include_center: If True, return the (x, y) cell as well.
-   * Otherwise,
-   * return surrounding cells only.
-   * radius: radius, in cells, of neighborhood to get.
-   * *
-   * Returns:
-   * An iterator of non-None objects in the given neighborhood;
-   * at most 9 if Moore, 5 if Von-Neumann
-   * (8 and 4 if not including the center).
-   */
-  def iterNeighbors(pos: (Int, Int), moore: Boolean, includeCenters: Boolean = false, radius: Int = 1): Iterator[AgentValue] = {
-    val neighborhood = iterNeighborhood(pos, moore, includeCenters, radius)
-    iterCellListContents(neighborhood)
-  }
-
-  def getNeighbors(pos: (Int, Int), moore: Boolean, includeCenter: Boolean = false, radius: Int = 1): List[AgentValue] = {
-    iterNeighbors(pos, moore, includeCenter, radius).toList
-  }
-
-  /**
    * Convert coordinate, handling torus looping.
    */
   def torusAjd(pos: (Int, Int)): (Int, Int) = {
@@ -201,10 +201,6 @@ abstract class Grid[AgentValue >: Null: ClassTag](width: Int, height: Int, isTor
     x < 0 || x >= width || y < 0 || y >= height
   }
 
-  def iterCellListContents(cell: (Int, Int)): Iterator[AgentValue] = {
-    iterCellListContents(List(cell).iterator)
-  }
-
   /**
    * Args:
    * cell_list: Array-like of (x, y) tuples, or single tuple.
@@ -214,6 +210,16 @@ abstract class Grid[AgentValue >: Null: ClassTag](width: Int, height: Int, isTor
    */
   def iterCellListContents(cellList: Iterator[(Int, Int)]): Iterator[AgentValue] = {
     cellList.filter(isCellEmpty).map { case (x, y) => grid(x)(y) }
+  }
+
+  def isCellEmpty(pos: (Int, Int)): Boolean = {
+    val (x, y) = pos
+    if (grid(x)(y) == defaultValue()) true
+    else false
+  }
+
+  def iterCellListContents(cell: (Int, Int)): Iterator[AgentValue] = {
+    iterCellListContents(List(cell).iterator)
   }
 
   def getCellListContents(cellList: (Int, Int)): List[AgentValue] = {
@@ -266,12 +272,6 @@ abstract class Grid[AgentValue >: Null: ClassTag](width: Int, height: Int, isTor
     val (x, y) = pos
     grid(x)(y) = null // this needed Value >: Null
     empties += pos
-  }
-
-  def isCellEmpty(pos: (Int, Int)): Boolean = {
-    val (x, y) = pos
-    if (grid(x)(y) == defaultValue()) true
-    else false
   }
 
   /**
