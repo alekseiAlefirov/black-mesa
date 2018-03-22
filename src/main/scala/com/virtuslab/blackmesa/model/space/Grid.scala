@@ -1,6 +1,9 @@
-package com.virtuslab.blackmesa.model
+package com.virtuslab.blackmesa.model.space
+
+import com.virtuslab.blackmesa.model.Agent
 
 import scala.collection.mutable
+import scala.language.existentials
 import scala.reflect.ClassTag
 
 /**
@@ -37,9 +40,9 @@ import scala.reflect.ClassTag
  * is_cell_empty: Returns a bool of the contents of a cell.
  *
  */
-abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, isTorus: Boolean) {
+case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, isTorus: Boolean) {
 
-  var grid: Array[Array[AgentValue]] = Array.fill(width) {
+  var grid: Array[Array[AgentValue]] = Array.fill(width) { //What if there will be more than one agent on the grid -> conflict resolution should be implemented !!
     Array.fill(height)(defaultValue())
   }
 
@@ -50,7 +53,7 @@ abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: I
     w -> h
   })(collection.breakOut)
 
-  def defaultValue(): AgentValue
+  def defaultValue(): AgentValue = null //TODO i guess this might be implemented in a better way
 
   def apply(index: Int): Array[AgentValue] = grid(index)
 
@@ -209,7 +212,7 @@ abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: I
    * An iterator of the contents of the cells identified in cell_list
    */
   def iterCellListContents(cellList: Iterator[(Int, Int)]): Iterator[AgentValue] = {
-    cellList.filter(isCellEmpty).map { case (x, y) => grid(x)(y) }
+    cellList.filter(pos => !isCellEmpty(pos)).map { case (x, y) => grid(x)(y) }
   }
 
   def isCellEmpty(pos: (Int, Int)): Boolean = {
@@ -225,6 +228,17 @@ abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: I
   def getCellListContents(cellList: (Int, Int)): List[AgentValue] = {
     getCellListContents(List(cellList).iterator)
   }
+
+  /**
+   * Returns:
+   * A list of all agents defined in a grid
+   *
+   */
+  def getAllAgents: Vector[AgentValue] = (for {
+    x <- 0 until width
+    y <- 0 until height
+    retVal <- getCellListContents((x, y))
+  } yield retVal).toVector
 
   /**
    * Args:
@@ -277,6 +291,7 @@ abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: I
   /**
    * Moves agent to a random empty cell, vacating agent's old cell.
    */
+  //TODO this is not working
   def moveToEmpty(agent: AgentValue): Unit = {
     val pos = agent.pos
     val newPos = findEmpty()
@@ -293,9 +308,9 @@ abstract class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: I
    */
   def findEmpty(): Option[(Int, Int)] = {
     if (existsEmptyCells()) {
-      // TODO make reuse random from Model
+      // PBATKO TODO make reuse random from Model
       val idx = new scala.util.Random().nextInt(empties.size)
-      Some(empties.toList(idx))
+      Some(empties.toList(idx)) // PBATKO TODO ugly
     } else None
   }
 

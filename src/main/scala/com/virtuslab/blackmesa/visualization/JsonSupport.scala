@@ -2,6 +2,7 @@ package com.virtuslab.blackmesa.visualization
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import com.virtuslab.blackmesa.visualization.Protocol._
+import com.virtuslab.blackmesa.visualization.modules.{ Circle, Portrayal, Rect }
 import spray.json.DefaultJsonProtocol
 
 trait JsonSupport extends SprayJsonSupport {
@@ -19,6 +20,39 @@ trait JsonSupport extends SprayJsonSupport {
   // server -> client
   private implicit lazy val vizStateFormat: RootJsonFormat[VizState] = jsonFormat1(VizState)
   private implicit lazy val modelParamsFormat: RootJsonFormat[ModelParams] = jsonFormat1(ModelParams)
+
+  implicit lazy val portrayalFormat: RootJsonFormat[Portrayal] = new RootJsonFormat[Portrayal] {
+
+    override def read(json: JsValue): Portrayal = ??? //TODO not implemented
+
+    override def write(obj: Portrayal): JsValue = obj match {
+      case Circle(x, y, r, color, layer, filled) => JsObject(
+        "Shape" -> JsString(obj.shape),
+        "x" -> JsNumber(x),
+        "y" -> JsNumber(y),
+        "r" -> JsNumber(r),
+        "Color" -> JsString(color),
+        "Filled" -> JsBoolean(filled),
+        "Layer" -> JsNumber(layer))
+
+      case Rect(x, y, w, h, color, layer, filled) => JsObject(
+        "Shape" -> JsString(obj.shape),
+        "x" -> JsNumber(x),
+        "y" -> JsNumber(y),
+        "w" -> JsNumber(w),
+        "h" -> JsNumber(h),
+        "Color" -> JsString(color),
+        "Filled" -> JsBoolean(filled),
+        "Layer" -> JsNumber(layer))
+    }
+  }
+
+  implicit lazy val portrayalMapFormat: JsonFormat[Map[Int, Vector[Portrayal]]] = new JsonFormat[Map[Int, Vector[Portrayal]]] {
+
+    override def write(obj: Map[Int, Vector[Portrayal]]): JsValue = JsObject(obj.map { case (k, v) => k.toString -> v.toJson })
+
+    override def read(json: JsValue): Map[Int, Vector[Portrayal]] = ??? //TODO not implemented
+  }
 
   implicit lazy val clientMessageFormat: RootJsonFormat[ClientMessage] = new RootJsonFormat[ClientMessage] {
     def read(json: JsValue): ClientMessage = json.asJsObject.fields.get("type") match {

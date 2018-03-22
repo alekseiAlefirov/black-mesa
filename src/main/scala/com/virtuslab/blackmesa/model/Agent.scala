@@ -1,17 +1,23 @@
 package com.virtuslab.blackmesa.model
 
-case class Agent(uniqueId: Int, model: Model) {
+import spray.json.JsObject
 
-  var pos: (Int, Int) = null
+trait Agent {
 
-  def callStage(stage: String): Unit = {
+  type Position = (Int, Int)
+
+  var pos: Position
+
+  def callStage(stage: String, model: Model): Unit = {
     stage match {
-      case "step" => step()
+      case "step" => step(model)
     }
   }
 
-  def step(): Unit = {}
+  def step(model: Model): Unit = {}
 
   def advance(): Unit = {}
+
+  def agentVars: JsObject = ???
 
 }

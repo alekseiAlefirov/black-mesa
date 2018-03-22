@@ -111,7 +111,7 @@ package object visualization {
     modelFactory: ModelParameters => Model,
     visualizationElements: IndexedSeq[VisualizationElement],
     modelName: String,
-    modelParams: Map[String, Parameter],
+    modelParams: Map[String, Parameter] = Map.empty,
     description: String = "No description available",
     port: Int = 8080)
 
