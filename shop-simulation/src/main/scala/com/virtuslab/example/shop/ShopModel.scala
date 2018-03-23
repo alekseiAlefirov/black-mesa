@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.example.shop
+package com.virtuslab.example.shop
 
 import com.virtuslab.blackmesa.model.space.Grid
 import com.virtuslab.blackmesa.model.{ Agent, BaseScheduler, Model }

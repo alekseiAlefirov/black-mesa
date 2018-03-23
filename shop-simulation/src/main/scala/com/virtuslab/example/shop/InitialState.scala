@@ -1,8 +1,7 @@
-package com.virtuslab.blackmesa.example.shop
+package com.virtuslab.example.shop
 
-import com.virtuslab.blackmesa.example.shop.Simulation.{ height, width }
-import com.virtuslab.blackmesa.example.shop.agents.Agents.{ Shelf, Shopper }
 import com.virtuslab.blackmesa.model.Agent
+import com.virtuslab.example.shop.agents.Agents.{ Shelf, Shopper }
 
 import scala.util.Random
 
@@ -33,7 +32,7 @@ object InitialState {
     .map(position => Shopper(pos = position))
     .toList
 
-  private def randomPosition: (Int, Int) = (random.nextInt(width), random.nextInt(height))
+  private def randomPosition: (Int, Int) = (random.nextInt(Simulation.width), random.nextInt(Simulation.height))
 
   private def withProducts(shelves: List[Shelf]): List[Shelf] = shelves.map(s => if (random.nextBoolean) s.withProduct else s)
 

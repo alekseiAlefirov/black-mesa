@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.example.shop.agents
+package com.virtuslab.example.shop.agents
 
 import com.virtuslab.blackmesa.model.Model
 
