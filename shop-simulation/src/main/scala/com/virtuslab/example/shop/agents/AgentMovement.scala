@@ -9,7 +9,9 @@ trait AgentMovement {
 }
 
 case object RandomMovement extends AgentMovement {
-  override def move(pos: (Int, Int), model: Model): (Int, Int) = findPossibleMovements(pos, model).random()
+  val random = new Random(System.currentTimeMillis())
+
+  override def move(pos: (Int, Int), model: Model): (Int, Int) = randomMovement(findPossibleMovements(pos, model))
 
   private def findPossibleMovements(pos: (Int, Int), model: Model) = {
     for {
@@ -20,15 +22,9 @@ case object RandomMovement extends AgentMovement {
   }
 
   private def findCoordinate(oldCoordinate: Int, upperRange: Int): Seq[Int] = {
-    (-1 to 1).map(oldCoordinate - _).filter(_ inRange (0, upperRange))
+    (-1 to 1).map(oldCoordinate - _).filter(0 until upperRange contains)
   }
 
-  implicit class InRange(x: Int) {
-    def inRange(range: (Int, Int)): Boolean = x >= range._1 && x < range._2
-  }
+  private def randomMovement(movements: Seq[(Int, Int)]): (Int, Int) = movements(random.nextInt(movements.length))
 
-  implicit class RandomMovement(movements: Seq[(Int, Int)]) {
-    val rand = new Random()
-    def random(): (Int, Int) = movements(rand.nextInt(movements.length))
-  }
 }

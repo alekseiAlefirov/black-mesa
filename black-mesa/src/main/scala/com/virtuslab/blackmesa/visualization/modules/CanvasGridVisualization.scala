@@ -1,8 +1,11 @@
 package com.virtuslab.blackmesa.visualization.modules
 
-import com.virtuslab.blackmesa.model.{ Agent, Model }
-import com.virtuslab.blackmesa.visualization.{ JsonSupport, VisualizationElement }
-import spray.json.{ JsValue, _ }
+import com.virtuslab.blackmesa.model.Agent
+import com.virtuslab.blackmesa.model.Model
+import com.virtuslab.blackmesa.visualization.JsonSupport
+import com.virtuslab.blackmesa.visualization.VisualizationElement
+import spray.json.JsValue
+import spray.json._
 
 class CanvasGridVisualization(
   portrayalFunction: Agent => Portrayal,

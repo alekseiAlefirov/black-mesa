@@ -2,9 +2,14 @@ package com.virtuslab.example.shop
 
 import com.virtuslab.blackmesa.model.Agent
 import com.virtuslab.blackmesa.model.space.Grid
-import com.virtuslab.blackmesa.visualization.modules.{ CanvasGridVisualization, Circle, Portrayal, Rect }
-import com.virtuslab.blackmesa.visualization.{ BlackMesaServer, Configuration }
-import com.virtuslab.example.shop.agents.Agents.{ Shelf, Shopper }
+import com.virtuslab.blackmesa.visualization.modules.CanvasGridVisualization
+import com.virtuslab.blackmesa.visualization.modules.Circle
+import com.virtuslab.blackmesa.visualization.modules.Portrayal
+import com.virtuslab.blackmesa.visualization.modules.Rect
+import com.virtuslab.blackmesa.visualization.BlackMesaServer
+import com.virtuslab.blackmesa.visualization.Configuration
+import com.virtuslab.example.shop.agents.Agents.Shelf
+import com.virtuslab.example.shop.agents.Agents.Shopper
 
 object Simulation extends App {
 

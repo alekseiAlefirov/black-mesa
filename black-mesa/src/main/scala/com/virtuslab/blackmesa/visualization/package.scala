@@ -1,7 +1,8 @@
 package com.virtuslab.blackmesa
 
 import com.virtuslab.blackmesa.model.Model
-import spray.json.{ JsObject, JsValue }
+import spray.json.JsObject
+import spray.json.JsValue
 
 package object visualization {
 

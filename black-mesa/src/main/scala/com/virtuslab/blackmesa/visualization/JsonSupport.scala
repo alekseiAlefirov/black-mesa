@@ -2,7 +2,9 @@ package com.virtuslab.blackmesa.visualization
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import com.virtuslab.blackmesa.visualization.Protocol._
-import com.virtuslab.blackmesa.visualization.modules.{ Circle, Portrayal, Rect }
+import com.virtuslab.blackmesa.visualization.modules.Circle
+import com.virtuslab.blackmesa.visualization.modules.Portrayal
+import com.virtuslab.blackmesa.visualization.modules.Rect
 import spray.json.DefaultJsonProtocol
 
 trait JsonSupport extends SprayJsonSupport {

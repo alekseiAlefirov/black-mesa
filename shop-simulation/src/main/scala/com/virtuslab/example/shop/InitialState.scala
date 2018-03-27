@@ -1,7 +1,8 @@
 package com.virtuslab.example.shop
 
 import com.virtuslab.blackmesa.model.Agent
-import com.virtuslab.example.shop.agents.Agents.{ Shelf, Shopper }
+import com.virtuslab.example.shop.agents.Agents.Shelf
+import com.virtuslab.example.shop.agents.Agents.Shopper
 
 import scala.util.Random
 

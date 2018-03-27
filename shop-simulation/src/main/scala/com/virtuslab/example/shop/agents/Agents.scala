@@ -2,7 +2,8 @@ package com.virtuslab.example.shop.agents
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import com.virtuslab.blackmesa.model.{ Agent, Model }
+import com.virtuslab.blackmesa.model.Agent
+import com.virtuslab.blackmesa.model.Model
 
 object Agents {
 
@@ -19,7 +20,7 @@ object Agents {
 
     private def collectProduct(model: Model): Unit = {
       Some(this.pos)
-        .map { case (x, y) => (x - 1, y) }
+        .map { case (x, y) => (x - 1, y) } //TODO this is just a temporary solution
         .filter { case (x, _) => x >= 0 }
         .flatMap(findShelf(model))
         .map(_.takeProduct)

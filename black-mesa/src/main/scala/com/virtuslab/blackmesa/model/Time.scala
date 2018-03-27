@@ -42,7 +42,7 @@ import scala.collection.mutable
 class BaseScheduler(var model: Model) {
 
   var steps = 0
-  var time: Double = 0 // TODO PBATKO rational
+  var time: Double = 0
   var agents = mutable.ArrayBuffer.empty[Agent]
 
   def add(agent: Agent): Unit = {

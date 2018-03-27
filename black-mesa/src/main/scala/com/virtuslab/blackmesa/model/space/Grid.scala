@@ -5,6 +5,7 @@ import com.virtuslab.blackmesa.model.Agent
 import scala.collection.mutable
 import scala.language.existentials
 import scala.reflect.ClassTag
+import scala.util.Random
 
 /**
  * Base class for a square grid.
@@ -176,7 +177,7 @@ case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, 
       // Skip if not a torus and new coords out of bounds.
       if !(isTorus && !(0 <= x + dx && x + dx < width) && !(0 <= y + dy && y + dy < width))
 
-      pxy @ (px, py) = torusAjd((x + dx, y + dy))
+      pxy = torusAdj((x + dx, y + dy))
 
       if !isOutOfBounds(pxy)
       if !coordinatesVisited.contains(pxy)
@@ -189,7 +190,7 @@ case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, 
   /**
    * Convert coordinate, handling torus looping.
    */
-  def torusAjd(pos: (Int, Int)): (Int, Int) = {
+  def torusAdj(pos: (Int, Int)): (Int, Int) = {
     if (!isOutOfBounds(pos)) pos
     else if (!isTorus) throw new RuntimeException(s"Point $pos out of bounds, and space non-toroidal.")
     else (pos._1 % width, pos._2 % height)
@@ -212,14 +213,10 @@ case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, 
    * An iterator of the contents of the cells identified in cell_list
    */
   def iterCellListContents(cellList: Iterator[(Int, Int)]): Iterator[AgentValue] = {
-    cellList.filter(pos => !isCellEmpty(pos)).map { case (x, y) => grid(x)(y) }
+    cellList.filter { case (x, y) => !isCellEmpty(x, y) }.map { case (x, y) => grid(x)(y) }
   }
 
-  def isCellEmpty(pos: (Int, Int)): Boolean = {
-    val (x, y) = pos
-    if (grid(x)(y) == defaultValue()) true
-    else false
-  }
+  def isCellEmpty(x: Int, y: Int): Boolean = grid(x)(y) == defaultValue()
 
   def iterCellListContents(cell: (Int, Int)): Iterator[AgentValue] = {
     iterCellListContents(List(cell).iterator)
@@ -260,7 +257,7 @@ case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, 
    * pos: Tuple of new position to move the agent to.
    */
   def moveAgent(agent: AgentValue, pos: (Int, Int)): Unit = {
-    val pos2 = torusAjd(pos)
+    val pos2 = torusAdj(pos)
     _removeAgent(agent.pos, agent)
     _placeAgent(pos, agent)
     agent.pos = pos
@@ -291,7 +288,6 @@ case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, 
   /**
    * Moves agent to a random empty cell, vacating agent's old cell.
    */
-  //TODO this is not working
   def moveToEmpty(agent: AgentValue): Unit = {
     val pos = agent.pos
     val newPos = findEmpty()
@@ -309,7 +305,7 @@ case class Grid[AgentValue >: Null <: Agent: ClassTag](width: Int, height: Int, 
   def findEmpty(): Option[(Int, Int)] = {
     if (existsEmptyCells()) {
       // PBATKO TODO make reuse random from Model
-      val idx = new scala.util.Random().nextInt(empties.size)
+      val idx = new Random().nextInt(empties.size)
       Some(empties.toList(idx)) // PBATKO TODO ugly
     } else None
   }

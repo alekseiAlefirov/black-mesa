@@ -1,6 +1,7 @@
 package com.virtuslab.blackmesa.visualization
 
-import akka.actor.{ Actor, ActorRef }
+import akka.actor.Actor
+import akka.actor.ActorRef
 import com.virtuslab.blackmesa.model.Model
 import com.virtuslab.blackmesa.visualization.ModelActor._
 

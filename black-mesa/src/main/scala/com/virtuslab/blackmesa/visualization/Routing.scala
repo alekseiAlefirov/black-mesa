@@ -1,8 +1,10 @@
 package com.virtuslab.blackmesa.visualization
 
-import akka.http.scaladsl.marshalling.{ Marshaller, ToEntityMarshaller }
+import akka.http.scaladsl.marshalling.Marshaller
+import akka.http.scaladsl.marshalling.ToEntityMarshaller
 import akka.http.scaladsl.model.MediaTypes.`text/html`
-import akka.http.scaladsl.server.{ Directives, Route }
+import akka.http.scaladsl.server.Directives
+import akka.http.scaladsl.server.Route
 import play.twirl.api.Html
 
 trait Routing extends ActorBasedModelExecution with JsonSupport {
