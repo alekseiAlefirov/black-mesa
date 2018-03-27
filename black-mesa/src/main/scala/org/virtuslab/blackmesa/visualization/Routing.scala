@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.visualization
+package org.virtuslab.blackmesa.visualization
 
 import akka.http.scaladsl.marshalling.Marshaller
 import akka.http.scaladsl.marshalling.ToEntityMarshaller

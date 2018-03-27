@@ -1,9 +1,9 @@
-package com.virtuslab.blackmesa.visualization.modules
+package org.virtuslab.blackmesa.visualization.modules
 
-import com.virtuslab.blackmesa.model.Agent
-import com.virtuslab.blackmesa.model.Model
-import com.virtuslab.blackmesa.visualization.JsonSupport
-import com.virtuslab.blackmesa.visualization.VisualizationElement
+import org.virtuslab.blackmesa.model.Agent
+import org.virtuslab.blackmesa.visualization.JsonSupport
+import org.virtuslab.blackmesa.visualization.VisualizationElement
+import org.virtuslab.blackmesa.model.Model
 import spray.json.JsValue
 import spray.json._
 

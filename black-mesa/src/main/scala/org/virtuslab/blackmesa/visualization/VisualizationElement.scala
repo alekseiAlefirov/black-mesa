@@ -1,6 +1,6 @@
-package com.virtuslab.blackmesa.visualization
+package org.virtuslab.blackmesa.visualization
 
-import com.virtuslab.blackmesa.model.Model
+import org.virtuslab.blackmesa.model.Model
 import spray.json.JsValue
 
 trait VisualizationElement {

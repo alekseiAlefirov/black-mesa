@@ -1,9 +1,9 @@
-package com.virtuslab.example.shop.agents
+package org.virtuslab.example.shop.agents
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import com.virtuslab.blackmesa.model.Agent
-import com.virtuslab.blackmesa.model.Model
+import org.virtuslab.blackmesa.model.Agent
+import org.virtuslab.blackmesa.model.Model
 
 object Agents {
 

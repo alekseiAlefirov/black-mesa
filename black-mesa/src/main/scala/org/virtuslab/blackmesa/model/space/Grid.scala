@@ -1,6 +1,6 @@
-package com.virtuslab.blackmesa.model.space
+package org.virtuslab.blackmesa.model.space
 
-import com.virtuslab.blackmesa.model.Agent
+import org.virtuslab.blackmesa.model.Agent
 
 import scala.collection.mutable
 import scala.language.existentials

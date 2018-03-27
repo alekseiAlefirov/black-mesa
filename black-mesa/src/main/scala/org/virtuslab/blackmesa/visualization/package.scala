@@ -1,6 +1,6 @@
-package com.virtuslab.blackmesa
+package org.virtuslab.blackmesa
 
-import com.virtuslab.blackmesa.model.Model
+import org.virtuslab.blackmesa.model.Model
 import spray.json.JsObject
 import spray.json.JsValue
 

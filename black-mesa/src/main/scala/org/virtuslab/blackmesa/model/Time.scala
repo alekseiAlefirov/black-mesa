@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.model
+package org.virtuslab.blackmesa.model
 
 import scala.collection.mutable
 

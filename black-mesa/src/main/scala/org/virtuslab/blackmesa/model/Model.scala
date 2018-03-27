@@ -1,6 +1,6 @@
-package com.virtuslab.blackmesa.model
+package org.virtuslab.blackmesa.model
 
-import com.virtuslab.blackmesa.model.space.Grid
+import org.virtuslab.blackmesa.model.space.Grid
 import spray.json.JsObject
 
 import scala.util.Random

@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.visualization
+package org.virtuslab.blackmesa.visualization
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http

@@ -1,9 +1,9 @@
-package com.virtuslab.blackmesa.visualization
+package org.virtuslab.blackmesa.visualization
 
 import akka.actor.Actor
 import akka.actor.ActorRef
-import com.virtuslab.blackmesa.model.Model
-import com.virtuslab.blackmesa.visualization.ModelActor._
+import org.virtuslab.blackmesa.visualization.ModelActor._
+import org.virtuslab.blackmesa.model.Model
 
 class ModelActor(val configuration: Configuration) extends Actor with JsonSupport {
 
@@ -16,7 +16,7 @@ class ModelActor(val configuration: Configuration) extends Actor with JsonSuppor
 
   println("ModelActor started!")
 
-  import com.virtuslab.blackmesa.visualization.Protocol._
+  import org.virtuslab.blackmesa.visualization.Protocol._
 
   override def receive: Receive = {
     case IncomingConnection(out) => context.become(connected(out))

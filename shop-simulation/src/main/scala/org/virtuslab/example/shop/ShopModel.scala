@@ -1,9 +1,9 @@
-package com.virtuslab.example.shop
+package org.virtuslab.example.shop
 
-import com.virtuslab.blackmesa.model.space.Grid
-import com.virtuslab.blackmesa.model.Agent
-import com.virtuslab.blackmesa.model.BaseScheduler
-import com.virtuslab.blackmesa.model.Model
+import org.virtuslab.blackmesa.model.space.Grid
+import org.virtuslab.blackmesa.model.Agent
+import org.virtuslab.blackmesa.model.BaseScheduler
+import org.virtuslab.blackmesa.model.{ BaseScheduler, Model }
 
 case class ShopModel(grid: Grid[Agent]) extends Model {
 

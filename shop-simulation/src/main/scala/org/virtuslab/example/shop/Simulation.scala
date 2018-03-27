@@ -1,15 +1,15 @@
-package com.virtuslab.example.shop
+package org.virtuslab.example.shop
 
-import com.virtuslab.blackmesa.model.Agent
-import com.virtuslab.blackmesa.model.space.Grid
-import com.virtuslab.blackmesa.visualization.modules.CanvasGridVisualization
-import com.virtuslab.blackmesa.visualization.modules.Circle
-import com.virtuslab.blackmesa.visualization.modules.Portrayal
-import com.virtuslab.blackmesa.visualization.modules.Rect
-import com.virtuslab.blackmesa.visualization.BlackMesaServer
-import com.virtuslab.blackmesa.visualization.Configuration
-import com.virtuslab.example.shop.agents.Agents.Shelf
-import com.virtuslab.example.shop.agents.Agents.Shopper
+import org.virtuslab.blackmesa.model.Agent
+import org.virtuslab.blackmesa.model.space.Grid
+import org.virtuslab.blackmesa.visualization.modules.CanvasGridVisualization
+import org.virtuslab.blackmesa.visualization.modules.Circle
+import org.virtuslab.blackmesa.visualization.modules.Portrayal
+import org.virtuslab.blackmesa.visualization.modules.Rect
+import org.virtuslab.blackmesa.visualization.BlackMesaServer
+import org.virtuslab.blackmesa.visualization.Configuration
+import org.virtuslab.example.shop.agents.Agents.Shelf
+import org.virtuslab.example.shop.agents.Agents.Shopper
 
 object Simulation extends App {
 

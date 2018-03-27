@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.visualization
+package org.virtuslab.blackmesa.visualization
 
 import akka.NotUsed
 import akka.actor.ActorSystem
@@ -12,10 +12,10 @@ import akka.stream.scaladsl.Sink
 import akka.stream.scaladsl.Source
 import akka.stream.Materializer
 import akka.stream.OverflowStrategy
-import com.virtuslab.blackmesa.visualization.ModelActor.IncomingConnection
-import com.virtuslab.blackmesa.visualization.Protocol.ClientMessage
-import com.virtuslab.blackmesa.visualization.Protocol.InvalidMessage
-import com.virtuslab.blackmesa.visualization.Protocol.ServerMessage
+import org.virtuslab.blackmesa.visualization.ModelActor.IncomingConnection
+import org.virtuslab.blackmesa.visualization.Protocol.ClientMessage
+import org.virtuslab.blackmesa.visualization.Protocol.InvalidMessage
+import org.virtuslab.blackmesa.visualization.Protocol.ServerMessage
 
 import scala.util.Try
 

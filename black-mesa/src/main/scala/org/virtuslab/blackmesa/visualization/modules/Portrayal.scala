@@ -1,4 +1,4 @@
-package com.virtuslab.blackmesa.visualization.modules
+package org.virtuslab.blackmesa.visualization.modules
 
 //TODO implement all portrayal types
 sealed trait Portrayal {
