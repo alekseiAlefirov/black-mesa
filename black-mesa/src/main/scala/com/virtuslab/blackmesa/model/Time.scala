@@ -55,7 +55,7 @@ class BaseScheduler(var model: Model) {
   }
 
   def step(): Unit = {
-    agents.foreach(_.step())
+    agents.foreach(_.step(model))
     steps += 1
     time += 1
   }
@@ -102,7 +102,7 @@ class RandomActivation(model: Model) extends BaseScheduler(model) {
 class SimultaneousActivation(model: Model) extends BaseScheduler(model) {
 
   override def step(): Unit = {
-    agents.foreach(_.step())
+    agents.foreach(_.step(model))
     agents.foreach(_.advance())
     steps += 1
     time += 1
@@ -137,7 +137,7 @@ class StagedActivation(
 
     stages.foreach { stage: String =>
 
-      agents.foreach(_.callStage(stage))
+      agents.foreach(_.callStage(stage, model))
 
       if (shuffleBetweenStages) shuffleAgents()
 

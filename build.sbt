@@ -1,28 +1,11 @@
-lazy val akkaHttpVersion = "10.0.11"
-lazy val akkaVersion    = "2.5.11"
+scalaVersion := "2.12.5"
 
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
-      organization    := "com.virtuslab",
-      scalaVersion    := "2.12.4"
-    )),
-    name := "BlackMesa - MESA Scala Port",
-    libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
-      "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
-      "com.typesafe.akka" %% "akka-http-xml"        % akkaHttpVersion,
-      "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
+lazy val mesa = (project in file("black-mesa"))
+  .enablePlugins(SbtTwirl)
 
-      "com.github.fommil" %% "spray-json-shapeless" % "1.4.0",
-
-      "com.typesafe.akka" %% "akka-http-testkit"    % akkaHttpVersion % Test,
-      "com.typesafe.akka" %% "akka-testkit"         % akkaVersion     % Test,
-      "com.typesafe.akka" %% "akka-stream-testkit"  % akkaVersion     % Test,
-      "org.scalatest"     %% "scalatest"            % "3.0.1"         % Test
-    )
-  ).enablePlugins(SbtTwirl)
+lazy val shop = (project in file("shop-simulation"))
+  .dependsOn(mesa)
 
 
-
-
+lazy val root = (project in file("."))
+  .aggregate(mesa, shop)

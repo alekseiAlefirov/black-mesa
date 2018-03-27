@@ -1,12 +1,21 @@
 package com.virtuslab.blackmesa.visualization
 
 import akka.NotUsed
-import akka.actor.{ ActorSystem, PoisonPill, Props }
-import akka.http.scaladsl.model.ws.{ BinaryMessage, Message, TextMessage }
-import akka.stream.scaladsl.{ Flow, Sink, Source }
-import akka.stream.{ Materializer, OverflowStrategy }
+import akka.actor.ActorSystem
+import akka.actor.PoisonPill
+import akka.actor.Props
+import akka.http.scaladsl.model.ws.BinaryMessage
+import akka.http.scaladsl.model.ws.Message
+import akka.http.scaladsl.model.ws.TextMessage
+import akka.stream.scaladsl.Flow
+import akka.stream.scaladsl.Sink
+import akka.stream.scaladsl.Source
+import akka.stream.Materializer
+import akka.stream.OverflowStrategy
 import com.virtuslab.blackmesa.visualization.ModelActor.IncomingConnection
-import com.virtuslab.blackmesa.visualization.Protocol.{ ClientMessage, InvalidMessage, ServerMessage }
+import com.virtuslab.blackmesa.visualization.Protocol.ClientMessage
+import com.virtuslab.blackmesa.visualization.Protocol.InvalidMessage
+import com.virtuslab.blackmesa.visualization.Protocol.ServerMessage
 
 import scala.util.Try
 

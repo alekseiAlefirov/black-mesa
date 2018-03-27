@@ -1,7 +1,8 @@
 package com.virtuslab.blackmesa
 
 import com.virtuslab.blackmesa.model.Model
-import spray.json.{ JsObject, JsValue }
+import spray.json.JsObject
+import spray.json.JsValue
 
 package object visualization {
 
@@ -111,7 +112,7 @@ package object visualization {
     modelFactory: ModelParameters => Model,
     visualizationElements: IndexedSeq[VisualizationElement],
     modelName: String,
-    modelParams: Map[String, Parameter],
+    modelParams: Map[String, Parameter] = Map.empty,
     description: String = "No description available",
     port: Int = 8080)
 
